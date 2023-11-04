@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import { Form, Input, Button } from './ContactForm.styled';
 
 export class ContactForm extends Component {
+  static propTypes = {
+    handleSubmit: PropTypes.func.isRequired,
+  }
+  
   state = {
     name: '',
     number: '',

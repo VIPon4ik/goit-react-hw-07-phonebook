@@ -36,7 +36,7 @@ export class App extends Component {
   };
 
   handleFilterChange = e => {
-    this.state.contacts = this.contacts;
+    this.setState({contacts: this.contacts});
 
     const filterValue = e.target.value.toLowerCase();
 
