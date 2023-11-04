@@ -25,7 +25,7 @@ export class ContactForm extends Component {
     return (
       <Form
         onSubmit={e => {
-          handleSubmit(e);
+          handleSubmit(e, { nameValue: e.target.elements.name.value, numberValue: e.target.elements.number.value });
           this.setState({ name: '', number: ''})
         }}
       >

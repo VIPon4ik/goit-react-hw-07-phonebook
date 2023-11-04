@@ -10,12 +10,15 @@ export class App extends Component {
     filter: '',
   };
 
-  handleSubmit = e => {
+  constructor() {
+    super();
+    this.contacts = [];
+  }
+
+  handleSubmit = (e, { nameValue, numberValue }) => {
     e.preventDefault();
 
     const id = nanoid();
-    const nameValue = e.currentTarget.elements.name.value;
-    const numberValue = e.currentTarget.elements.number.value;
 
     if (this.state.contacts.map(({ name }) => name).includes(nameValue)) {
       alert(`${nameValue} is already in contacts`);
@@ -36,21 +39,14 @@ export class App extends Component {
   };
 
   handleFilterChange = e => {
-    this.setState({contacts: this.contacts});
+    this.setState({ contacts: this.contacts });
 
     const filterValue = e.target.value.toLowerCase();
 
     this.setState({
       filter: filterValue,
       contacts: this.contacts.filter(({ name, number }) => {
-        if (
-          name.toLowerCase().includes(filterValue) ||
-          number.includes(filterValue)
-        ) {
-          return true;
-        }
-
-        return false;
+        return name.toLowerCase().includes(filterValue) || number.includes(filterValue);
       }),
     });
   };
