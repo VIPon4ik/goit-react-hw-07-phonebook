@@ -41,12 +41,12 @@ export class App extends Component {
   handleFilterChange = e => {
     this.setState({ contacts: this.contacts });
 
-    const filterValue = e.target.value.toLowerCase();
+    const filterValue = e.target.value;
 
     this.setState({
       filter: filterValue,
       contacts: this.contacts.filter(({ name, number }) => {
-        return name.toLowerCase().includes(filterValue) || number.includes(filterValue);
+        return name.toLowerCase().includes(filterValue.toLowerCase()) || number.includes(filterValue.toLowerCase());
       }),
     });
   };
