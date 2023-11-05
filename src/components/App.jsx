@@ -15,12 +15,25 @@ export class App extends Component {
     this.contacts = [];
   }
 
+  checkIsAlreadyInContacts(nameValue) {
+    return this.state.contacts.map(({ name }) => name).includes(nameValue);
+  }
+
+  getFiltredContacts(contacts, filter) {
+    return contacts.filter(
+      ({ name, number }) =>
+        name.toLowerCase().includes(filter.toLowerCase()) ||
+        number.includes(filter.toLowerCase())
+    );
+  }
+
   handleSubmit = (e, { nameValue, numberValue }) => {
     e.preventDefault();
 
     const id = nanoid();
+    const isAlreadyInContacts = this.checkIsAlreadyInContacts(nameValue);
 
-    if (this.state.contacts.map(({ name }) => name).includes(nameValue)) {
+    if (isAlreadyInContacts) {
       alert(`${nameValue} is already in contacts`);
       return;
     }
@@ -39,16 +52,8 @@ export class App extends Component {
   };
 
   handleFilterChange = e => {
-    this.setState({ contacts: this.contacts });
-
     const filterValue = e.target.value;
-
-    this.setState({
-      filter: filterValue,
-      contacts: this.contacts.filter(({ name, number }) => {
-        return name.toLowerCase().includes(filterValue.toLowerCase()) || number.includes(filterValue.toLowerCase());
-      }),
-    });
+    this.setState({ filter: filterValue });
   };
 
   handleDeleteContact = _id => {
@@ -63,7 +68,12 @@ export class App extends Component {
   };
 
   render() {
-    const { contacts } = this.state;
+    const { contacts, filter } = this.state;
+    let filtredContacts;
+
+    if (filter !== '') {
+      filtredContacts = this.getFiltredContacts(contacts, filter);
+    }
     return (
       <div
         style={{
@@ -85,7 +95,7 @@ export class App extends Component {
           value={this.state.filter}
         />
         <ContactList
-          contacts={contacts}
+          contacts={filtredContacts || contacts}
           onDeleteContact={this.handleDeleteContact}
         />
       </div>
