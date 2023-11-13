@@ -78,7 +78,7 @@ export class App extends Component {
       }
     );
   };
-
+ 
   render() {
     const { contacts, filter } = this.state;
     let filtredContacts;
