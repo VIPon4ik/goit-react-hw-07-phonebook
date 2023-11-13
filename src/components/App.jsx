@@ -15,6 +15,18 @@ export class App extends Component {
     this.contacts = [];
   }
 
+  componentDidMount() {
+    const contacts = JSON.parse(localStorage.getItem('contacts'));
+
+    if (contacts) {
+      this.setState({ contacts });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+  }
+
   checkIsAlreadyInContacts(nameValue) {
     return this.state.contacts.map(({ name }) => name).includes(nameValue);
   }
