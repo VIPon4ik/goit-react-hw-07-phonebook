@@ -25,7 +25,7 @@ export const App = () => {
         number.includes(filter.toLowerCase())
     );
   }
-
+ 
   const handleSubmit = (e, { nameValue, numberValue }) => {
     e.preventDefault();
 
