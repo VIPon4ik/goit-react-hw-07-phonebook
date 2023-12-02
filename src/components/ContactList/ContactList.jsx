@@ -1,7 +1,24 @@
 import PropTypes from 'prop-types';
 import { ListParagraph, Button } from './ContactList.styled';
+import { deleteContact } from 'redux/contactsSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
-export const ContactList = ({ contacts, onDeleteContact }) => {
+export const ContactList = () => {
+  const dispatch = useDispatch();
+  const contacts = useSelector(state => state.contacts);
+
+  const handleDeleteContact = id => {
+    dispatch(deleteContact(id));
+  };
+
+  // function getFiltredContacts(filter) {
+  //   return contacts.filter(
+  //     ({ name, number }) =>
+  //       name.toLowerCase().includes(filter.toLowerCase()) ||
+  //       number.includes(filter.toLowerCase())
+  //   );
+  // }
+
   return (
     <ul>
       {contacts.map(({ id, name, number }) => {
@@ -9,7 +26,7 @@ export const ContactList = ({ contacts, onDeleteContact }) => {
           <li key={id}>
             <ListParagraph>
               {name} {number}
-              <Button type="button" onClick={() => onDeleteContact(id)}>
+              <Button type="button" onClick={() => handleDeleteContact(id)}>
                 Delete
               </Button>
             </ListParagraph>
