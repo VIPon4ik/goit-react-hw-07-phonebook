@@ -6,22 +6,25 @@ import { useDispatch, useSelector } from 'react-redux';
 export const ContactList = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(state => state.contacts);
+  const filter = useSelector(state => state.filter);
 
   const handleDeleteContact = id => {
     dispatch(deleteContact(id));
   };
 
-  // function getFiltredContacts(filter) {
-  //   return contacts.filter(
-  //     ({ name, number }) =>
-  //       name.toLowerCase().includes(filter.toLowerCase()) ||
-  //       number.includes(filter.toLowerCase())
-  //   );
-  // }
+  function getFiltredContacts(filter) {
+    return contacts.filter(
+      ({ name, number }) =>
+        name.toLowerCase().includes(filter.toLowerCase()) ||
+        number.includes(filter.toLowerCase())
+    );
+  }
+
+  const filtredContacts = getFiltredContacts(filter);
 
   return (
     <ul>
-      {contacts.map(({ id, name, number }) => {
+      {filtredContacts.map(({ id, name, number }) => {
         return (
           <li key={id}>
             <ListParagraph>
