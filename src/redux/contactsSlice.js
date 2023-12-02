@@ -6,9 +6,12 @@ export const contactsSlice = createSlice({
   reducers: {
     addContact (state, action) {
       state.push(action.payload)
+      localStorage.setItem('contacts', JSON.stringify(state))
     },
     deleteContact (state, action) {
-      return state.filter((contact) => contact.id !== action.payload)
+      const filtred =  state.filter((contact) => contact.id !== action.payload);
+      localStorage.setItem('contacts', JSON.stringify(filtred));
+      return filtred;
     }
   }
 })
