@@ -17,7 +17,6 @@ export const ContactForm = () => {
 
     const nameValue = e.target.name.value;
     const numberValue = e.target.number.value;
-    console.log(nameValue, numberValue);
 
     const id = nanoid();
     const isAlreadyInContacts = checkIsAlreadyInContacts(nameValue);
