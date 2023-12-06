@@ -6,6 +6,7 @@ export const Form = styled.form`
   border: 1px solid black;
   padding: 20px;
   gap: 10px;
+  width: 200px;
 `
 
 export const Input = styled.input`
