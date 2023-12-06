@@ -18,7 +18,6 @@ export const ContactForm = () => {
     const nameValue = e.target.name.value;
     const numberValue = e.target.number.value;
 
-    const id = nanoid();
     const isAlreadyInContacts = checkIsAlreadyInContacts(nameValue);
 
     if (isAlreadyInContacts) {
@@ -26,7 +25,7 @@ export const ContactForm = () => {
       return;
     }
 
-    dispatch(addContact({ id: id, name: nameValue, number: numberValue }));
+    dispatch(addContact({ name: nameValue, phone: numberValue }));
 
     e.target.reset();
   };

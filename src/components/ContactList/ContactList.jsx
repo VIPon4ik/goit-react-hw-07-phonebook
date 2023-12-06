@@ -1,12 +1,19 @@
 import { ListParagraph, Button } from './ContactList.styled';
-import { deleteContact } from 'redux/operations';
+import { deleteContact, fetchContacts } from 'redux/operations';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectContacts, selectFilter } from 'redux/selectors';
+import { selectContacts, selectError, selectIsLoading, selectFilter } from 'redux/selectors';
+import { useEffect } from 'react';
 
 export const ContactList = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(selectContacts);
+  const isLoading = useSelector(selectIsLoading);
+  const error = useSelector(selectError);
   const filter = useSelector(selectFilter);
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch])
 
   const handleDeleteContact = id => {
     dispatch(deleteContact(id));
@@ -14,21 +21,21 @@ export const ContactList = () => {
 
   function getFiltredContacts(filter) {
     return contacts.filter(
-      ({ name, number }) =>
+      ({ name, phone }) =>
         name.toLowerCase().includes(filter.toLowerCase()) ||
-        number.includes(filter.toLowerCase())
+        phone.includes(filter.toLowerCase())
     );
   }
 
   const filtredContacts = getFiltredContacts(filter);
-
+  console.log(contacts);
   return (
     <ul>
-      {filtredContacts.map(({ id, name, number }) => {
+      {contacts.map(({ id, name, phone }) => {
         return (
           <li key={id}>
             <ListParagraph>
-              {name} {number}
+              {name} {phone}
               <Button type="button" onClick={() => handleDeleteContact(id)}>
                 Delete
               </Button>
